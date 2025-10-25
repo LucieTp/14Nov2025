@@ -1,0 +1,54 @@
+The idea is to create triathlon game, in which you need to complete a 1.5 km swim, a 26.5 km bike and a 10 km run (= 28 km).
+The gpx of this course needs to be birthday related (i.e. a cake, or spell out happy birthday, not sure yet).
+
+Elements I would like to integrate :
+
+A main map with the three courses (I was thinking it would be a single large map)
+
+Game characteristics :
+- A clock 
+- A bar that saves how much of the course has been completed
+
+The player loose if they have not completed the course within xxx time
+
+The player can pick up food that will make it go faster
+
+(1) Swim : 
+- the player needs to pick up wetsuit
+- the avatar needs to change into the wetsuit
+- he can then jump in the water (swimming avatar if possible)
+- the course will be indicated by hoops that disappear once they have been crossed. 
+- the player needs to avoid jellyfish which will be swimming around (will have time penalities if they touch a jellyfish)
+
+(2) Bike :
+- the player needs to pick up its bike
+- the avatar changes to a cyclist
+- again, following the hoops (can't keep going with the course if they miss a hoop)
+- can pick up food that will make it go faster (pop corn)
+- can have time penalities if they hit a rock (flat tire)
+
+(3) Run :
+- the player needs to put on their shoes
+- the avatar changes to runner
+- can pick up food to go faster (pop corn)
+- not sure what will be challenging on the run (could have lots of other runners blocking them, or have to jump over tree branches, idk
+
+
+To do:
+
+- Create the general map 
+- Add hoops, food and obstacles 
+- Create the function that checks that hoops have been crossed 
+- Create and display the clock
+- Create a bar that shows how much of the course has been completed
+- Create the game over function
+- Make a initial window display which explains the rules
+- Learn how to add objects and get the player to pick them up
+- Make a function that makes it go faster for xx time if picked up food
+- Make a time penalty function
+
+Optional :
+- Animate the sprite
+
+
+

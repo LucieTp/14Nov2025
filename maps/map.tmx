@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="6">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="13">
  <tileset firstgid="1" source="../../../Beach_Tileset.tsx"/>
  <layer id="1" name="background" width="50" height="50">
   <data encoding="csv">
@@ -63,5 +63,26 @@
   <object id="3" name="boundary" x="4" y="3" width="5" height="798"/>
   <object id="4" name="boundary" x="8" y="792" width="791" height="7"/>
   <object id="5" name="boundary" x="793" y="4" width="4" height="791"/>
+  <object id="6" name="Hoop" x="164" y="370">
+   <point/>
+  </object>
+  <object id="7" name="Hoop" x="105" y="436">
+   <point/>
+  </object>
+  <object id="8" name="Hoop" x="137" y="499">
+   <point/>
+  </object>
+  <object id="9" name="Hoop" x="219" y="531">
+   <point/>
+  </object>
+  <object id="10" type="Jellyfish" x="78" y="35">
+   <point/>
+  </object>
+  <object id="11" type="Jellyfish" x="205" y="47">
+   <point/>
+  </object>
+  <object id="12" type="Jellyfish" x="407" y="26">
+   <point/>
+  </object>
  </objectgroup>
 </map>

@@ -3,6 +3,7 @@ import pytmx
 import pyscroll
 
 from Player import Player
+from Hoops import Hoop
 
 class Game:
     def __init__(self):
@@ -20,6 +21,16 @@ class Game:
         player_position = tmx_data.get_object_by_name("player")
         self.player = Player(player_position.x, player_position.y)
 
+        # hoop positions
+        self.all_hoops = pygame.sprite.Group()
+
+        for obj in tmx_data.objects:
+            if obj.name == "Hoop":
+                hoop = Hoop(obj.x, obj.y)
+                self.all_hoops.add(hoop)
+
+
+
         # boundary rectangles
         self.walls = []
 
@@ -30,6 +41,8 @@ class Game:
         # make layer group (choose active layer so that the player doesn't end up under the background)
         self.group = pyscroll.PyscrollGroup(map_layer, default_layer=1)
         self.group.add(self.player)
+        for hoop in self.all_hoops:
+            self.group.add(hoop)
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -50,10 +63,9 @@ class Game:
     def update(self):
         self.group.update()
 
-        # check boundary
-        for sprite in self.group.sprites():
-            if sprite.feet.collidelist(self.walls) > -1: # condition for it to have hit a wall
-                sprite.move_back()
+        # check boundary (for player only)
+        if self.player.feet.collidelist(self.walls) > -1:
+            self.player.move_back()
 
     def run(self):
 
@@ -70,6 +82,7 @@ class Game:
             self.group.update()
             self.group.center(self.player.rect) # make sure it zooms on the player
             self.group.draw(self.screen)
+
             pygame.display.flip()
 
             for event in pygame.event.get():
