@@ -15,8 +15,6 @@ class Hoop(pygame.sprite.Sprite):
 
 
     def get_image(self, map_x, map_y, width=40, height=80):
-        print("in hoop")
-
         image = pygame.Surface([width,height])
         image.blit(self.sprite_sheet, (0,0), (map_x,map_y,80,80))
         return image

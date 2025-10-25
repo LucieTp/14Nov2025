@@ -66,6 +66,14 @@ class Game:
         # check boundary (for player only)
         if self.player.feet.collidelist(self.walls) > -1:
             self.player.move_back()
+        # check going through hoops
+
+        # Detect collision between player and any hoop
+        collided_hoop = pygame.sprite.spritecollideany(self.player, self.all_hoops)
+
+        if collided_hoop:
+            self.all_hoops.remove(collided_hoop)
+            self.group.remove(collided_hoop)  # if hoops are also in your pyscroll group
 
     def run(self):
 

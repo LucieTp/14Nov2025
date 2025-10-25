@@ -49,6 +49,7 @@ To do:
 
 Optional :
 - Animate the sprite
+- Aniate hoops
 
 
 
