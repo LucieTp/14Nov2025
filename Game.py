@@ -23,11 +23,14 @@ class Game:
 
         # hoop positions
         self.all_hoops = pygame.sprite.Group()
+        hoop_width = 100
+        hoop_height = 100
 
         for obj in tmx_data.objects:
             if obj.name == "Hoop":
                 print(obj.id)
-                hoop = Hoop(obj.x, obj.y, obj.id)
+                hoop = Hoop(name = "Hoops", x = obj.x, y = obj.y,
+                            id = obj.id, width = hoop_width, height = hoop_height, nb_animations = 9)
                 self.all_hoops.add(hoop)
 
 
