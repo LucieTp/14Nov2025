@@ -40,16 +40,16 @@ To do:
 - Add hoops X
 	- Make hoops disappear when they are crossed X
 	- Create the function that checks that hoops have been crossed in the right order X
-	- Add a label that says which hoop should be crossed next 
+	- Add a label that says which hoop should be crossed next X
 - Add food
 	- Make food disappear when they are crossed
 	- Add food to inventory
 	- Allow the player to use its food to go faster (space bar?)
 - Add jellyfish
 	- Create collision with jellyfish (maybe Don't need to have time penalties, just having them will slow player down)
-- Create and display the clock
+- Create and display the clock X
 - Create a bar that shows how much of the course has been completed
-- Create the game over function
+- Create the game over function X
 - Make a initial window display which explains the rules
 - Learn how to add objects and get the player to pick them up
 - Make a function that makes it go faster for xx time if picked up food

@@ -25,3 +25,4 @@ class Hoop(AnimateSprite):
             # Other hoops are static
             self.image = self.images[0]
 
+

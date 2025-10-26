@@ -26,6 +26,7 @@ class Game:
         self.player = Player(player_position.x, player_position.y)
 
         # hoop positions
+        self.total_hoops = 50 # nb of hoops
         self.all_hoops = pygame.sprite.Group()
         hoop_width = 100
         hoop_height = 100
@@ -67,6 +68,26 @@ class Game:
         elif pressed[pygame.K_RIGHT]:
             self.player.move_right()
             self.player.change_orientation("right")
+
+    def draw_progress_bar(self):
+
+        print("in progress")
+        # Constants
+        bar_color = (111, 210, 46)
+        bar_border_color = (255, 255, 255)
+        bar_position = (10, 30)  # top-left corner
+        bar_size = (200, 20)  # width, height
+
+        # Compute progress
+        hoops_remaining = len(self.all_hoops)
+        progress = 1 - (hoops_remaining - self.total_hoops)  # fraction completed
+
+        # Draw background (empty bar)
+        pygame.draw.rect(self.screen, bar_border_color, (*bar_position, *bar_size), 2)
+
+        # Draw filled portion
+        filled_width = int(bar_size[0] * progress)
+        pygame.draw.rect(self.screen, bar_color, (bar_position[0], bar_position[1], filled_width, bar_size[1]))
 
     def update(self):
         self.group.update()
@@ -111,7 +132,7 @@ class Game:
             self.group.center(self.player.rect) # make sure it zooms on the player
             self.group.draw(self.screen)
             self.timer.display_timer(self.screen)
-
+            self.draw_progress_bar()
 
             pygame.display.flip()
 
