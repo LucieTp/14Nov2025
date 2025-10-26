@@ -4,9 +4,13 @@ import pyscroll
 
 from Player import Player
 from Hoops import Hoop
+from Timer import Timer
 
 class Game:
     def __init__(self):
+
+        self.timer = Timer(30000) # 30 secs
+
         # create game window
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption('Objectif 28')
@@ -67,6 +71,15 @@ class Game:
     def update(self):
         self.group.update()
 
+        # make sure only one hoop is animated (the next one that will need to be crossed)
+        if self.all_hoops:
+            # Find the hoop with the smallest ID
+            min_nb = min(hoop.number for hoop in self.all_hoops)
+
+            # Activate only that hoop
+            for hoop in self.all_hoops:
+                hoop.is_active = (hoop.number == min_nb)
+
         # check boundary (for player only)
         if self.player.feet.collidelist(self.walls) > -1:
             self.player.move_back()
@@ -86,21 +99,32 @@ class Game:
 
         # boucle de jeu
         running = True # keep it running until the player presses exit
+        self.timer.activate()
 
         while running:
 
+            self.timer.update()
             self.player.save_location() # save location to handle collisions
             self.handle_input() # to detect keys pressed
             self.update()
             self.group.update()
             self.group.center(self.player.rect) # make sure it zooms on the player
             self.group.draw(self.screen)
+            self.timer.display_timer(self.screen)
+
 
             pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # if press exit on window
                     running = False
+
+            # game over
+            if not self.timer.active:
+                self.timer.game_over(self.screen)
+                pygame.display.flip()
+                pygame.time.delay(2000)  # pause for 2 seconds
+                running = False
 
             clock.tick(60) # 60 images/sec
 

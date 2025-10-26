@@ -1,12 +1,12 @@
 import pygame
 
 class AnimateSprite(pygame.sprite.Sprite):
-    def __init__(self, name, width, height, nb_animations, y_offset=160):
+    def __init__(self, name, width, height, nb_animations, y_offset=160, x_offset=40):
         super().__init__()
         self.sprite_sheet = pygame.image.load(f"objects/{name}.png").convert_alpha()
 
         # Load all animation frames
-        self.images = self.get_images(y_offset, width, height, nb_animations)
+        self.images = self.get_images(x_offset, y_offset, width, height, nb_animations)
 
         # Animation state
         self.animation_index = 0
@@ -14,14 +14,14 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.image = self.images[self.animation_index]
         # self.image.set_colorkey((128, 0, 128)) # remove purple background - get background with print(self.sprite_sheet.get_at((0, 0)))
         self.rect = self.image.get_rect()
-        self.animation_speed = 0.05  # lower = slower animation
+        self.animation_speed = 0.1  # lower = slower animation
         self.clock = 0.0
 
-    def get_images(self, y_offset, width, height, nb_animations):
+    def get_images(self, x_offset, y_offset, width, height, nb_animations):
         """Extract nb_animations frames horizontally from sprite sheet."""
         images = []
         for i in range(nb_animations):
-            x = i * width
+            x = x_offset + i * width
             image = self.get_image(x, y_offset, width, height)
             images.append(image)
         print(images)
