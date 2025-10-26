@@ -37,8 +37,16 @@ The player can pick up food that will make it go faster
 To do:
 
 - Create the general map 
-- Add hoops, food and obstacles 
-- Create the function that checks that hoops have been crossed 
+- Add hoops X
+	- Make hoops disappear when they are crossed X
+	- Create the function that checks that hoops have been crossed in the right order X
+	- Add a label that says which hoop should be crossed next 
+- Add food
+	- Make food disappear when they are crossed
+	- Add food to inventory
+	- Allow the player to use its food to go faster (space bar?)
+- Add jellyfish
+	- Create collision with jellyfish (maybe Don't need to have time penalties, just having them will slow player down)
 - Create and display the clock
 - Create a bar that shows how much of the course has been completed
 - Create the game over function

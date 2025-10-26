@@ -26,7 +26,8 @@ class Game:
 
         for obj in tmx_data.objects:
             if obj.name == "Hoop":
-                hoop = Hoop(obj.x, obj.y)
+                print(obj.id)
+                hoop = Hoop(obj.x, obj.y, obj.id)
                 self.all_hoops.add(hoop)
 
 
@@ -66,14 +67,15 @@ class Game:
         # check boundary (for player only)
         if self.player.feet.collidelist(self.walls) > -1:
             self.player.move_back()
-        # check going through hoops
 
         # Detect collision between player and any hoop
         collided_hoop = pygame.sprite.spritecollideany(self.player, self.all_hoops)
 
         if collided_hoop:
-            self.all_hoops.remove(collided_hoop)
-            self.group.remove(collided_hoop)  # if hoops are also in your pyscroll group
+            min_nb =  min(hoop.number for hoop in self.all_hoops) # this gives the order in which hoops should be crossed
+            if collided_hoop.number == min_nb:
+                self.all_hoops.remove(collided_hoop) # remove hoop from pyscroll all_hoops
+                self.group.remove(collided_hoop)  # remove hoop from pyscroll group
 
     def run(self):
 
