@@ -48,16 +48,28 @@ To do:
 - Add jellyfish
 	- Create collision with jellyfish (maybe Don't need to have time penalties, just having them will slow player down)
 - Create and display the clock X
-- Create a bar that shows how much of the course has been completed
+- Create a bar that shows how much of the course has been completed X
 - Create the game over function X
 - Make a initial window display which explains the rules
 - Learn how to add objects and get the player to pick them up
 - Make a function that makes it go faster for xx time if picked up food
 - Make a time penalty function
+- Create winner window which gives the track of the player, the time it took them to complete the course
+- Change player sprite sheet and animate player movement
 
 Optional :
 - Animate the sprite
 - Aniate hoops
+
+# things to install
+
+- pycharm
+
+- matplotlib
+- seaborn
+- pygame
+- pyscroll
+- tmx package
 
 
 

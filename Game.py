@@ -33,7 +33,6 @@ class Game:
 
         for obj in tmx_data.objects:
             if obj.name == "Hoop":
-                print(obj.id)
                 hoop = Hoop(name = "Hoops", x = obj.x, y = obj.y,
                             id = obj.id, width = hoop_width, height = hoop_height, nb_animations = 9)
                 self.all_hoops.add(hoop)
@@ -71,7 +70,6 @@ class Game:
 
     def draw_progress_bar(self):
 
-        print("in progress")
         # Constants
         bar_color = (111, 210, 46)
         bar_border_color = (255, 255, 255)
@@ -80,7 +78,7 @@ class Game:
 
         # Compute progress
         hoops_remaining = len(self.all_hoops)
-        progress = 1 - (hoops_remaining - self.total_hoops)  # fraction completed
+        progress = 1 - (hoops_remaining / self.total_hoops)  # fraction completed
 
         # Draw background (empty bar)
         pygame.draw.rect(self.screen, bar_border_color, (*bar_position, *bar_size), 2)
@@ -88,6 +86,12 @@ class Game:
         # Draw filled portion
         filled_width = int(bar_size[0] * progress)
         pygame.draw.rect(self.screen, bar_color, (bar_position[0], bar_position[1], filled_width, bar_size[1]))
+
+    def check_progress(self):
+        if len(self.all_hoops) == 0:
+            # self.timer.deactivate()
+            self.player.plot_track(self.screen)
+
 
     def update(self):
         self.group.update()
@@ -130,9 +134,13 @@ class Game:
             self.update()
             self.group.update()
             self.group.center(self.player.rect) # make sure it zooms on the player
+            self.player.save_track(self.timer.get_time_left())
+            # draw elements on screen
             self.group.draw(self.screen)
             self.timer.display_timer(self.screen)
             self.draw_progress_bar()
+            self.check_progress()
+
 
             pygame.display.flip()
 
@@ -143,9 +151,14 @@ class Game:
             # game over
             if not self.timer.active:
                 self.timer.game_over(self.screen)
+                self.player.plot_track(self.screen)
                 pygame.display.flip()
                 pygame.time.delay(2000)  # pause for 2 seconds
                 running = False
+
+
+
+
 
             clock.tick(60) # 60 images/sec
 

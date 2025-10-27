@@ -42,7 +42,6 @@ class Timer:
             surface.blit(text, self.position)
 
     def game_over(self, surface):
-        print("in game over")
         big_font = pygame.font.Font(None, 80)
         text = big_font.render("GAME OVER", True, (255, 50, 50))
         text_rect = text.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))

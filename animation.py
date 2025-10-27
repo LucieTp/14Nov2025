@@ -24,7 +24,6 @@ class AnimateSprite(pygame.sprite.Sprite):
             x = x_offset + i * width
             image = self.get_image(x, y_offset, width, height)
             images.append(image)
-        print(images)
         return images
 
     def get_image(self, x, y, width, height):
