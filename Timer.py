@@ -9,6 +9,7 @@ class Timer:
         self.duration = duration              # in milliseconds
         self.start_time = 0
         self.active = False
+        self.paused = False
         self.font = pygame.font.Font(None, font_size)
         self.position = position
         self.color = color
@@ -21,8 +22,11 @@ class Timer:
         self.active = False
         self.start_time = 0
 
+    def pause(self):
+        self.paused = True
+
     def update(self):
-        if self.active:
+        if self.active and not self.paused:
             current_time = pygame.time.get_ticks()
             if current_time - self.start_time >= self.duration:
                 self.deactivate()
@@ -42,7 +46,8 @@ class Timer:
             surface.blit(text, self.position)
 
     def game_over(self, surface):
-        big_font = pygame.font.Font(None, 80)
-        text = big_font.render("GAME OVER", True, (255, 50, 50))
-        text_rect = text.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
-        surface.blit(text, text_rect)
+        if not self.active and not self.paused:
+            big_font = pygame.font.Font(None, 80)
+            text = big_font.render("GAME OVER", True, (255, 50, 50))
+            text_rect = text.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
+            surface.blit(text, text_rect)

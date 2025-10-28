@@ -66,31 +66,57 @@ class Player(pygame.sprite.Sprite):
             self.track["x"].append(self.position[0])
             self.track["y"].append(self.position[1])
 
-    def plot_track(self, surface):
+    def plot_track(self, map_width, map_height, surface, pause_duration=10000):
 
         data = pd.DataFrame.from_dict(self.track)
-        print(data)
+
         # plot
-        plt.figure(figsize=(6, 6))
-        sns.lineplot(x="x", y="y", sort=False, estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
-        plt.gca().invert_yaxis()  # flip to match Pygame coordinates
-        plt.title("Player Track")
+        plt.figure(figsize=(10, 10))
+        sns.lineplot(x="x", y="y", sort=False, linewidth = 10, color = "black", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
+        plt.xlim(0, map_width)
+        plt.ylim(0, map_height)
+        plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
+        plt.title("Triathlon dans l'après midi")
         plt.axis("off")
 
         # Save plot to an in-memory buffer
         buffer = io.BytesIO()
-        plt.savefig(buffer, format="PNG", bbox_inches="tight", pad_inches=0)
+        plt.savefig(buffer, format="PNG", bbox_inches="tight", pad_inches=0, transparent=True)
         plt.close()  # close figure to free memory
         buffer.seek(0)
 
+        # transform image into a pygame image
         image = Image.open(buffer)
         mode = image.mode
         size = image.size
         data = image.tobytes()
         plot_surface = pygame.image.fromstring(data, size, mode)
 
+        # Scale plot up to fill the entire screen
+        screen_width, screen_height = surface.get_size()
+        plot_surface = pygame.transform.smoothscale(plot_surface, (screen_width, screen_height))
+
         # Center and blit on the screen
         rect = plot_surface.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
         surface.blit(plot_surface, rect)
+
+        # display before pausing
+        pygame.display.flip()
+
+        # Keep plot visible for a duration
+        start_time = pygame.time.get_ticks()
+        running = True
+        while running:
+            # still allow the player to quit the screen
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+            # pause until time out
+            if pygame.time.get_ticks() - start_time > pause_duration:
+                running = False
+
+            pygame.time.Clock().tick(30)
+
 
 

@@ -54,12 +54,15 @@ To do:
 - Learn how to add objects and get the player to pick them up
 - Make a function that makes it go faster for xx time if picked up food
 - Make a time penalty function
+- Make function that displays track of player at the end X
+- Add finish line which prompts the display of winner window and player track (+ below)
 - Create winner window which gives the track of the player, the time it took them to complete the course
 - Change player sprite sheet and animate player movement
+- Seperate game_over from deactivate and add deactivate to success plot track
 
 Optional :
 - Animate the sprite
-- Aniate hoops
+- Animate hoops X
 
 # things to install
 
