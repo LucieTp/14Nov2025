@@ -1,12 +1,27 @@
 import pygame
 
 class AnimateSprite(pygame.sprite.Sprite):
-    def __init__(self, name, width, height, nb_animations, y_offset=160, x_offset=40):
+    def __init__(self, name, width, height, nb_animations):
         super().__init__()
         self.sprite_sheet = pygame.image.load(f"objects/{name}.png").convert_alpha()
 
         # Load all animation frames
-        self.images = self.get_images(x_offset, y_offset, width, height, nb_animations)
+
+        if name == "Hoops":
+            self.y_offset = 160
+            self.x_offset = 40
+            self.images = self.get_images(self.x_offset, self.y_offset, width, height, nb_animations)
+
+
+        elif name == "Hamtaro1":
+            self.rect_height = 27
+            self.rect_width = 32
+            self.images = {  # different image for different orientations
+                "down": self.get_images(self.rect_width, self.rect_height, self.rect_width, self.rect_height, 4),
+                "left": self.get_images(self.rect_width, self.rect_height * 3, self.rect_width, self.rect_height, 4),
+                "right": self.get_images(self.rect_width, self.rect_height * 4, self.rect_width, self.rect_height, 4),
+                "up": self.get_images(self.rect_width, self.rect_height * 2, self.rect_width, self.rect_height, 4)
+            }
 
         # Animation state
         self.animation_index = 0

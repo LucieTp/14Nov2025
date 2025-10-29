@@ -5,22 +5,29 @@ import seaborn as sns
 from PIL import Image
 import io
 
+from animation import AnimateSprite
+
 
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
 
         super().__init__() # here we initiate all the variables associated with player (self.blabla)
-        self.sprite_sheet = pygame.image.load("player/Hamster-Sprite.png")
-        self.image = self.get_image(0,0) # say where the image is in the png file
+        self.sprite_sheet = pygame.image.load("player/Hamtaro1.png")
+
+        self.rect_height = 27
+        self.rect_width = 32
+
+        self.image = self.get_image(0,0, self.rect_width, self.rect_height) # say where the image is in the png file
         self.image.set_colorkey((0,0,0)) # remove background
         self.rect = self.image.get_rect() # create image rectangle
         self.position = [x, y] # player position
+
         self.images = { # different image for different orientations
-            "down":self.get_image(0,34),
-            "left":self.get_image(0,70),
-            "right":self.get_image(0,70),
-            "up":self.get_image(0,34*5)
+            "down":self.get_image(self.rect_width, self.rect_height, self.rect_width, self.rect_height),
+            "left":self.get_image(self.rect_width,self.rect_height*3, self.rect_width, self.rect_height),
+            "right":self.get_image(self.rect_width,self.rect_height*4, self.rect_width, self.rect_height),
+            "up":self.get_image(self.rect_width,self.rect_height*2, self.rect_width, self.rect_height)
         }
         self.feet = pygame.Rect(0,0, self.rect.width * 0.5, 12) # feet location for collisions
         self.old_position = self.position.copy() # keep in record the old position to replace the player in case of collision
@@ -42,41 +49,45 @@ class Player(pygame.sprite.Sprite):
     def move_down(self): self.position[1] += self.speed
 
     def update(self):
+        # self.animate()
         self.rect.topleft = self.position
-        self.feet   .midbottom = self.rect.midbottom
+        self.feet.midbottom = self.rect.midbottom
 
     def move_back(self):
         self.position = self.old_position # replace player if it hits a boundary
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
-    def get_image(self, x, y):
-        image = pygame.Surface([34,34])
-        image.blit(self.sprite_sheet, (0,0), (x,y,34,34))
+    def get_image(self, x, y, width, height):
+        image = pygame.Surface([width, height])
+        image.blit(self.sprite_sheet, (0,0), (x,y,width,height))
         return image
 
     def save_track(self, time):
 
         # only save every half a second
         current_time = pygame.time.get_ticks()  # in milliseconds
-        if current_time - self.last_save_time >= 500:  # 500 ms = 0.5 sec
+        if current_time - self.last_save_time >= 250:  # 250 ms = 0.25 sec
             self.last_save_time = current_time
 
             self.track["time"].append(current_time / 1000)
             self.track["x"].append(self.position[0])
             self.track["y"].append(self.position[1])
 
-    def plot_track(self, map_width, map_height, surface, pause_duration=10000):
+    def plot_track(self, map_width, map_height, surface, pause_duration=10000, distance = 28):
 
         data = pd.DataFrame.from_dict(self.track)
 
+        # add background rectangle
+        screen_width, screen_height = surface.get_size()
+
         # plot
         plt.figure(figsize=(10, 10))
-        sns.lineplot(x="x", y="y", sort=False, linewidth = 10, color = "black", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
+        sns.lineplot(x="x", y="y", sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
         plt.xlim(0, map_width)
         plt.ylim(0, map_height)
         plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
-        plt.title("Triathlon dans l'après midi")
+        # plt.title("Triathlon dans la soirée")
         plt.axis("off")
 
         # Save plot to an in-memory buffer
@@ -93,7 +104,6 @@ class Player(pygame.sprite.Sprite):
         plot_surface = pygame.image.fromstring(data, size, mode)
 
         # Scale plot up to fill the entire screen
-        screen_width, screen_height = surface.get_size()
         plot_surface = pygame.transform.smoothscale(plot_surface, (screen_width, screen_height))
 
         # Center and blit on the screen

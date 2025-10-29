@@ -93,6 +93,7 @@ class Game:
 
     def zoom_out(self, map_width, map_height, target_zoom=0.45, duration=1500):
         """Smoothly zoom out over time (in ms)"""
+
         start_zoom = self.map_layer.zoom
         start_time = pygame.time.get_ticks()
 
@@ -120,7 +121,7 @@ class Game:
         self.player.plot_track(map_width, map_height, self.screen)
 
     def check_progress(self, map_width, map_height):
-        if len(self.all_hoops) == 25:
+        if len(self.all_hoops) == 29:
 
             self.timer.pause()
             self.zoom_out(map_width, map_height)
