@@ -6,22 +6,17 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.sprite_sheet = pygame.image.load(f"objects/{name}.png").convert_alpha()
 
         # Load all animation frames
-
         if name == "Hoops":
+            print("Hoop")
             self.y_offset = 160
             self.x_offset = 40
             self.images = self.get_images(self.x_offset, self.y_offset, width, height, nb_animations)
 
-
-        elif name == "Hamtaro1":
-            self.rect_height = 27
-            self.rect_width = 32
-            self.images = {  # different image for different orientations
-                "down": self.get_images(self.rect_width, self.rect_height, self.rect_width, self.rect_height, 4),
-                "left": self.get_images(self.rect_width, self.rect_height * 3, self.rect_width, self.rect_height, 4),
-                "right": self.get_images(self.rect_width, self.rect_height * 4, self.rect_width, self.rect_height, 4),
-                "up": self.get_images(self.rect_width, self.rect_height * 2, self.rect_width, self.rect_height, 4)
-            }
+        elif name == "Jellyfish":
+            print("Jellyfish")
+            self.y_offset = 100
+            self.x_offset = 5
+            self.images = self.get_images(self.x_offset, self.y_offset, width, height, nb_animations)
 
         # Animation state
         self.animation_index = 0
@@ -31,6 +26,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.animation_speed = 0.1  # lower = slower animation
         self.clock = 0.0
+
 
     def get_images(self, x_offset, y_offset, width, height, nb_animations):
         """Extract nb_animations frames horizontally from sprite sheet."""

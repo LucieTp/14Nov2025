@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
 
         super().__init__() # here we initiate all the variables associated with player (self.blabla)
-        self.sprite_sheet = pygame.image.load("player/Hamtaro1.png")
+        self.sprite_sheet = pygame.image.load("objects/Hamtaro1.png")
 
         self.rect_height = 27
         self.rect_width = 32
@@ -29,6 +29,7 @@ class Player(pygame.sprite.Sprite):
             "right":self.get_image(self.rect_width,self.rect_height*4, self.rect_width, self.rect_height),
             "up":self.get_image(self.rect_width,self.rect_height*2, self.rect_width, self.rect_height)
         }
+
         self.feet = pygame.Rect(0,0, self.rect.width * 0.5, 12) # feet location for collisions
         self.old_position = self.position.copy() # keep in record the old position to replace the player in case of collision
         self.speed = 3 # number of pixels the player moves in one press
@@ -39,19 +40,18 @@ class Player(pygame.sprite.Sprite):
     # changes their values
     def save_location(self): self.old_position = self.position.copy()
 
-    def change_orientation(self, name):
-        self.image = self.images[name]
-        self.image.set_colorkey((0,0,0)) # avoid having the background
-
     def move_right(self): self.position[0] += self.speed
     def move_left(self): self.position[0] -= self.speed
     def move_up(self): self.position[1] -= self.speed
     def move_down(self): self.position[1] += self.speed
 
     def update(self):
-        # self.animate()
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+
+    def change_orientation(self, name):
+        self.image = self.images[name]
+        self.image.set_colorkey((0,0,0)) # avoid having the background
 
     def move_back(self):
         self.position = self.old_position # replace player if it hits a boundary

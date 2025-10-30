@@ -59,6 +59,7 @@ To do:
 - Create winner window which gives the track of the player, the time it took them to complete the course
 - Change player sprite sheet and animate player movement
 - Seperate game_over from deactivate and add deactivate to success plot track X
+- Add music
 
 Optional :
 - Animate the sprite

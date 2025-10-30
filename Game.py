@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
+from Jellyfish import Jellyfish
 from Player import Player
 from Hoops import Hoop
 from Timer import Timer
@@ -9,7 +10,7 @@ from Timer import Timer
 class Game:
     def __init__(self):
 
-        self.timer = Timer(40000) # 30 secs
+        self.timer = Timer(80000) # 60 secs
 
         # create game window
         self.screen = pygame.display.set_mode((800, 600))
@@ -39,6 +40,15 @@ class Game:
                             id = obj.id, width = hoop_width, height = hoop_height, nb_animations = 9)
                 self.all_hoops.add(hoop)
 
+        self.all_jellyfish = pygame.sprite.Group()
+        jelly_width = 57
+        jelly_height = 50
+        for obj in tmx_data.objects:
+            if obj.name == "Jellyfish":
+                jellyfish = Jellyfish(name = "Jellyfish", x = obj.x, y = obj.y,
+                            id = obj.id, width = jelly_width, height = jelly_height, nb_animations = 8)
+                self.all_jellyfish.add(jellyfish)
+
 
 
         # boundary rectangles
@@ -53,6 +63,10 @@ class Game:
         self.group.add(self.player)
         for hoop in self.all_hoops:
             self.group.add(hoop)
+
+        for jellyfish in self.all_jellyfish:
+            self.group.add(jellyfish)
+
         self.total_hoops = len(self.all_hoops) # nb of hoops
 
 
@@ -121,7 +135,7 @@ class Game:
         self.player.plot_track(map_width, map_height, self.screen)
 
     def check_progress(self, map_width, map_height):
-        if len(self.all_hoops) == 29:
+        if len(self.all_hoops) == 0:
 
             self.timer.pause()
             self.zoom_out(map_width, map_height)
