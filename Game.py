@@ -6,6 +6,8 @@ from Jellyfish import Jellyfish
 from Player import Player
 from Hoops import Hoop
 from Timer import Timer
+from Walls import Wall
+
 
 class Game:
     def __init__(self):
@@ -50,20 +52,19 @@ class Game:
                 self.all_jellyfish.add(jellyfish)
 
 
-
         # boundary rectangles
-        self.walls = []
+        self.all_walls = pygame.sprite.Group()
 
         for obj in tmx_data.objects:
-            if obj.name == "boundary":
-                self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+            if obj.name in ["Boundary", "Tree"]:
+                wall = Wall(obj.x, obj.y, obj.width, obj.height)
+                self.all_walls.add(wall)
 
         # make layer group (choose active layer so that the player doesn't end up under the background)
         self.group = pyscroll.PyscrollGroup(self.map_layer, default_layer=3)
         self.group.add(self.player)
         for hoop in self.all_hoops:
             self.group.add(hoop)
-
         for jellyfish in self.all_jellyfish:
             self.group.add(jellyfish)
 
@@ -156,7 +157,12 @@ class Game:
                 hoop.is_active = (hoop.number == min_nb)
 
         # check boundary (for player only)
-        if self.player.feet.collidelist(self.walls) > -1:
+
+
+        collided_jellyfish = pygame.sprite.spritecollideany(self.player, self.all_jellyfish)
+        collided_walls = pygame.sprite.spritecollideany(self.player, self.all_walls)
+
+        if collided_jellyfish or collided_walls:
             self.player.move_back()
 
         # Detect collision between player and any hoop

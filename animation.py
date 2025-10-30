@@ -7,13 +7,11 @@ class AnimateSprite(pygame.sprite.Sprite):
 
         # Load all animation frames
         if name == "Hoops":
-            print("Hoop")
             self.y_offset = 160
             self.x_offset = 40
             self.images = self.get_images(self.x_offset, self.y_offset, width, height, nb_animations)
 
         elif name == "Jellyfish":
-            print("Jellyfish")
             self.y_offset = 100
             self.x_offset = 5
             self.images = self.get_images(self.x_offset, self.y_offset, width, height, nb_animations)
