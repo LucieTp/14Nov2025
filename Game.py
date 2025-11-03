@@ -12,7 +12,10 @@ from Walls import Wall
 class Game:
     def __init__(self):
 
-        self.timer = Timer(80000) # 60 secs
+        # tells us if the player has pressed play yet or not
+        self.is_playing = False
+
+        self.timer = Timer(80000) # 80 secs
 
         # create game window
         self.screen = pygame.display.set_mode((800, 600))
@@ -56,7 +59,7 @@ class Game:
         self.all_walls = pygame.sprite.Group()
 
         for obj in tmx_data.objects:
-            if obj.name in ["Boundary", "Tree"]:
+            if obj.name in ["Boundary", "Tree", "Jellyfish"]:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.all_walls.add(wall)
 
@@ -69,6 +72,38 @@ class Game:
             self.group.add(jellyfish)
 
         self.total_hoops = len(self.all_hoops) # nb of hoops
+
+    def intro(self):
+
+        image = pygame.image.load("maps/intro.png")
+        clock = pygame.time.Clock()
+        running = True
+
+        while running:
+
+            # Draw map
+            self.screen.blit(image, (0, 0))
+            pygame.display.flip()
+            clock.tick(60) # keep display showing
+
+            for event in pygame.event.get():
+                # allow to exit if needed
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    raise SystemExit
+
+                # click play button
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    x = 250.165 # got these coordinates by printing obj.x etc
+                    y = 352.345
+                    w = 318.872
+                    h = 167.364
+
+                    # 250.165 352.345 318.872 167.364
+                    button = pygame.Rect(x, y, w, h)
+                    if button.collidepoint(event.pos):
+                        self.is_playing = True # start the game
+                        running = False # stop the display loop
 
 
     def handle_input(self):
@@ -136,12 +171,12 @@ class Game:
         self.player.plot_track(map_width, map_height, self.screen)
 
     def check_progress(self, map_width, map_height):
+        # this is the function that puts an end to the game when all hoops have been crossed
         if len(self.all_hoops) == 0:
 
             self.timer.pause()
             self.zoom_out(map_width, map_height)
             self.timer.deactivate()
-
 
 
     def update(self):
@@ -157,8 +192,6 @@ class Game:
                 hoop.is_active = (hoop.number == min_nb)
 
         # check boundary (for player only)
-
-
         collided_jellyfish = pygame.sprite.spritecollideany(self.player, self.all_jellyfish)
         collided_walls = pygame.sprite.spritecollideany(self.player, self.all_walls)
 
@@ -197,18 +230,20 @@ class Game:
             self.draw_progress_bar()
             self.check_progress(self.map_width, self.map_height)
 
-
             pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # if press exit on window
                     running = False
+                    pygame.quit()
+                    raise SystemExit
 
             # game over
             if not self.timer.active:
                 self.timer.game_over(self.screen)
                 pygame.display.flip()
                 pygame.time.delay(2000)  # pause for 2 seconds
+                self.is_playing = False
                 running = False
 
 

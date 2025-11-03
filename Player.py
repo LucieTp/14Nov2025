@@ -8,27 +8,20 @@ import io
 from animation import AnimateSprite
 
 
-class Player(pygame.sprite.Sprite):
+class Player(AnimateSprite):
 
     def __init__(self, x, y):
 
-        super().__init__() # here we initiate all the variables associated with player (self.blabla)
+        super().__init__("Hamtaro1", 32, 27, 4) # here we initiate all the variables associated with player (self.blabla)
         self.sprite_sheet = pygame.image.load("objects/Hamtaro1.png")
 
         self.rect_height = 27
         self.rect_width = 32
 
-        self.image = self.get_image(0,0, self.rect_width, self.rect_height) # say where the image is in the png file
+        self.image = self.get_image_player(0,0, self.rect_width, self.rect_height) # say where the image is in the png file
         self.image.set_colorkey((0,0,0)) # remove background
         self.rect = self.image.get_rect() # create image rectangle
         self.position = [x, y] # player position
-
-        self.images = { # different image for different orientations
-            "down":self.get_image(self.rect_width, self.rect_height, self.rect_width, self.rect_height),
-            "left":self.get_image(self.rect_width,self.rect_height*3, self.rect_width, self.rect_height),
-            "right":self.get_image(self.rect_width,self.rect_height*4, self.rect_width, self.rect_height),
-            "up":self.get_image(self.rect_width,self.rect_height*2, self.rect_width, self.rect_height)
-        }
 
         self.feet = pygame.Rect(0,0, self.rect.width * 0.5, 12) # feet location for collisions
         self.old_position = self.position.copy() # keep in record the old position to replace the player in case of collision
@@ -49,16 +42,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
-    def change_orientation(self, name):
-        self.image = self.images[name]
-        self.image.set_colorkey((0,0,0)) # avoid having the background
-
     def move_back(self):
         self.position = self.old_position # replace player if it hits a boundary
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
-    def get_image(self, x, y, width, height):
+    def get_image_player(self, x, y, width, height):
         image = pygame.Surface([width, height])
         image.blit(self.sprite_sheet, (0,0), (x,y,width,height))
         return image
@@ -74,20 +63,18 @@ class Player(pygame.sprite.Sprite):
             self.track["x"].append(self.position[0])
             self.track["y"].append(self.position[1])
 
-    def plot_track(self, map_width, map_height, surface, pause_duration=10000, distance = 28):
+    def plot_track(self, map_width, map_height, surface, bg_duration = 10000, track_duration=4000):
 
         data = pd.DataFrame.from_dict(self.track)
 
         # add background rectangle
-        screen_width, screen_height = surface.get_size()
 
         # plot
         plt.figure(figsize=(10, 10))
-        sns.lineplot(x="x", y="y", sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
+        sns.lineplot(x="x", y="y", alpha = 0.1, sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
         plt.xlim(0, map_width)
         plt.ylim(0, map_height)
         plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
-        # plt.title("Triathlon dans la soirée")
         plt.axis("off")
 
         # Save plot to an in-memory buffer
@@ -103,30 +90,37 @@ class Player(pygame.sprite.Sprite):
         data = image.tobytes()
         plot_surface = pygame.image.fromstring(data, size, mode)
 
-        # Scale plot up to fill the entire screen
-        plot_surface = pygame.transform.smoothscale(plot_surface, (screen_width, screen_height))
-
         # Center and blit on the screen
         rect = plot_surface.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
-        surface.blit(plot_surface, rect)
-
-        # display before pausing
-        pygame.display.flip()
 
         # Keep plot visible for a duration
         start_time = pygame.time.get_ticks()
+
         running = True
         while running:
+
+            pygame.display.flip()
+
             # still allow the player to quit the screen
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    pygame.quit()
+                    raise SystemExit
 
-            # pause until time out
-            if pygame.time.get_ticks() - start_time > pause_duration:
-                running = False
+            # Draw depending on elapsed time
+            if pygame.time.get_ticks() - start_time > track_duration:
+
+                # show track from 'track_duration' ms
+                surface.blit(plot_surface, rect)
+
+                # then close window after bg_duration
+                if pygame.time.get_ticks() - start_time > bg_duration:
+                    pygame.quit()
+                    raise SystemExit
 
             pygame.time.Clock().tick(30)
+
+
 
 
 

@@ -5,12 +5,12 @@ import pygame
 
 
 class Timer:
-    def __init__(self, duration, font_size=30, position=(10, 10), color=(255, 255, 255)):
+    def __init__(self, duration, font_size=40, position=(10, 10), color=(255, 255, 255)):
         self.duration = duration              # in milliseconds
         self.start_time = 0
         self.active = False
         self.paused = False
-        self.font = pygame.font.Font(None, font_size)
+        self.font = pygame.font.SysFont("Arial", font_size)
         self.position = position
         self.color = color
 

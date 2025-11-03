@@ -20,9 +20,9 @@ class Hoop(AnimateSprite):
     def update(self):
         # active hoop is the hoop with smallest id number (the one that should be crossed next)
         if self.is_active:
-            self.animate()
+            self.animate("static")
         else:
             # Other hoops are static
-            self.image = self.images[0]
+            self.image = self.images["static"][0]
 
 

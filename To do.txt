@@ -46,7 +46,8 @@ To do:
 	- Add food to inventory
 	- Allow the player to use its food to go faster (space bar?)
 - Add jellyfish
-	- Create collision with jellyfish (maybe Don't need to have time penalties, just having them will slow player down)
+	- Create collision with jellyfish (maybe Don't need to have time penalties, just having them will slow player down) X
+	- Try to make it so that the collision zone is smaller X
 - Create and display the clock X
 - Create a bar that shows how much of the course has been completed X
 - Create the game over function X
@@ -57,7 +58,8 @@ To do:
 - Make function that displays track of player at the end X
 - Add finish line which prompts the display of winner window and player track (+ below)
 - Create winner window which gives the track of the player, the time it took them to complete the course
-- Change player sprite sheet and animate player movement
+- Change player sprite sheet X
+- and animate player movement X
 - Seperate game_over from deactivate and add deactivate to success plot track X
 - Add music
 

@@ -15,4 +15,4 @@ class Jellyfish(AnimateSprite):
 
     def update(self):
         # active hoop is the hoop with smallest id number (the one that should be crossed next)
-        self.animate()
+        self.animate("static")
