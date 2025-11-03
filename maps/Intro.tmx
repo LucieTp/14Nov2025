@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="14">
- <tileset firstgid="1" source="../../../Beach_Tileset.tsx"/>
+ <tileset firstgid="1" source="Beach_Tileset.tsx"/>
  <layer id="1" name="Calque de Tuiles 1" width="50" height="50">
   <data encoding="csv">
 153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,153,153,153,153,153,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,153,154,
@@ -110,7 +110,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="Calque d'Objets 1">
-  <object id="1" type="Play button" x="250.165" y="352.345" width="318.872" height="167.364"/>
+  <object id="1" type="Play button" x="253.688" y="351.464" width="318.872" height="174.411"/>
   <object id="4" x="86.0572" y="130.557" width="663.825" height="173.151">
    <text fontfamily="OCR A" pixelsize="56" wrap="1" color="#fee761" halign="center">Traverse tous les cerceaux dans le temps imparti</text>
   </object>
