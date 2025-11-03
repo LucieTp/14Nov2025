@@ -4,7 +4,7 @@ J'ai codé un petit jeu pour ton anniversaire
 
 Si ça te dit, il te faudra: 
 
-![plot](https://github.com/LucieTp/14Nov2025/maps/Intro.png)
+![plot](https://github.com/LucieTp/14Nov2025/blob/main/maps/Intro.png)
 
 (1) Installer pycharm, un IDE python (ça prend 20 minutes, mais c'est le plus simple pour que tout fonctionne sans pb)
 https://www.jetbrains.com/pycharm/data-science/?var=anaconda 
