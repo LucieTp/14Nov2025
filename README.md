@@ -29,7 +29,7 @@ Du coup, tu devrais avoir un powershell prompt qui s'affiche du style
 (j'espere que tu es tjrs sur windows pcq sinon jsp, faudra que tu te débrouilles)
 
 
-Une fois que tu es bien situé dans ton environement, execute *'pip install -r 'requirements.txt'* 
+Une fois que tu es bien situé dans ton environement, execute *pip install -r 'requirements.txt'* 
 
 Si ça marche pas, installe manuellement les modules dans le terminal avec "pip install pygame", "pip install pytmx", "pip install pyscroll", pareil pour numpy, pandas et seaborn
 
