@@ -127,7 +127,7 @@ class Game:
         # Constants
         bar_color = (111, 210, 46)
         bar_border_color = (255, 255, 255)
-        bar_position = (10, 30)  # top-left corner
+        bar_position = (10, 60)  # top-left corner
         bar_size = (200, 20)  # width, height
 
         # Compute progress
