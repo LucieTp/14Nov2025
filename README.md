@@ -1,4 +1,4 @@
-![plot](https://github.com/LucieTp/14Nov2025/blob/main/maps/Intro.png)
+![plot](https://github.com/LucieTp/14Nov2025/blob/main/maps/GitHub.png)
 
 
 J'ai codé un petit jeu pour ton anniversaire 
