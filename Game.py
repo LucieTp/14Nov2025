@@ -19,10 +19,10 @@ class Game:
 
         # create game window
         self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption('Objectif 28')
+        pygame.display.set_caption('Road to 28')
 
         # import map
-        tmx_data = pytmx.util_pygame.load_pygame("maps/cake_map.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("maps/cake_map.tmx", pixelalpha=True)
         map_data = pyscroll.TiledMapData(tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(map_data, self.screen.get_size())
         self.map_layer.zoom = 2 # zoom x 2
@@ -234,7 +234,6 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # if press exit on window
-                    running = False
                     pygame.quit()
                     raise SystemExit
 
@@ -244,7 +243,8 @@ class Game:
                 pygame.display.flip()
                 pygame.time.delay(2000)  # pause for 2 seconds
                 self.is_playing = False
-                running = False
+                pygame.quit()
+                raise SystemExit
 
 
 
