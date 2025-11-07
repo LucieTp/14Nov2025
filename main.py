@@ -1,7 +1,18 @@
+# /// script
+# dependencies = [
+# "numpy",
+# "pygame",
+# "pyscroll",
+# "pytmx",
+# ]
+# ///
+
 import pygame
 from Game import Game
+import asyncio # used for pygbag
 
-if __name__ == '__main__':
+
+async def main():
     pygame.init()
     game = Game()
 
@@ -9,6 +20,12 @@ if __name__ == '__main__':
     while running:
 
         if game.is_playing:
-            game.run()
+            await game.run()
+            await asyncio.sleep(0) # these are the commands for pygbag
         else:
-            game.intro()
+            await game.intro()
+            await asyncio.sleep(0)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

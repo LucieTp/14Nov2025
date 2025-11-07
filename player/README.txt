@@ -1,1 +1,0 @@
-https://www.spriters-resource.com/custom_edited/hamtarocustoms/asset/487600/

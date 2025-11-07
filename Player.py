@@ -1,9 +1,9 @@
 import pygame
-import pandas as pd
-from matplotlib import pyplot as plt
-import seaborn as sns
-from PIL import Image
-import io
+# import pandas as pd
+# from matplotlib import pyplot as plt
+# import seaborn as sns
+# from PIL import Image
+# import io
 
 from animation import AnimateSprite
 
@@ -13,7 +13,7 @@ class Player(AnimateSprite):
     def __init__(self, x, y):
 
         super().__init__("Hamtaro1", 32, 27, 4) # here we initiate all the variables associated with player (self.blabla)
-        self.sprite_sheet = pygame.image.load("objects/Hamtaro1.png")
+        self.sprite_sheet = pygame.image.load("assets/objects/Hamtaro1.png")
 
         self.rect_height = 27
         self.rect_width = 32
@@ -63,62 +63,62 @@ class Player(AnimateSprite):
             self.track["x"].append(self.position[0])
             self.track["y"].append(self.position[1])
 
-    def plot_track(self, map_width, map_height, surface, bg_duration = 10000, track_duration=4000):
-
-        data = pd.DataFrame.from_dict(self.track)
-
-        # add background rectangle
-
-        # plot
-        plt.figure(figsize=(10, 10))
-        sns.lineplot(x="x", y="y", alpha = 0.1, sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
-        plt.xlim(0, map_width)
-        plt.ylim(0, map_height)
-        plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
-        plt.axis("off")
-
-        # Save plot to an in-memory buffer
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format="PNG", bbox_inches="tight", pad_inches=0, transparent=True)
-        plt.close()  # close figure to free memory
-        buffer.seek(0)
-
-        # transform image into a pygame image
-        image = Image.open(buffer)
-        mode = image.mode
-        size = image.size
-        data = image.tobytes()
-        plot_surface = pygame.image.fromstring(data, size, mode)
-
-        # Center and blit on the screen
-        rect = plot_surface.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
-
-        # Keep plot visible for a duration
-        start_time = pygame.time.get_ticks()
-
-        running = True
-        while running:
-
-            pygame.display.flip()
-
-            # still allow the player to quit the screen
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    raise SystemExit
-
-            # Draw depending on elapsed time
-            if pygame.time.get_ticks() - start_time > track_duration:
-
-                # show track from 'track_duration' ms
-                surface.blit(plot_surface, rect)
-
-                # then close window after bg_duration
-                if pygame.time.get_ticks() - start_time > bg_duration:
-                    pygame.quit()
-                    raise SystemExit
-
-            pygame.time.Clock().tick(30)
+    # def plot_track(self, map_width, map_height, surface, bg_duration = 10000, track_duration=4000):
+    #
+    #     data = pd.DataFrame.from_dict(self.track)
+    #
+    #     # add background rectangle
+    #
+    #     # plot
+    #     plt.figure(figsize=(10, 10))
+    #     sns.lineplot(x="x", y="y", alpha = 0.1, sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
+    #     plt.xlim(0, map_width)
+    #     plt.ylim(0, map_height)
+    #     plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
+    #     plt.axis("off")
+    #
+    #     # Save plot to an in-memory buffer
+    #     buffer = io.BytesIO()
+    #     plt.savefig(buffer, format="PNG", bbox_inches="tight", pad_inches=0, transparent=True)
+    #     plt.close()  # close figure to free memory
+    #     buffer.seek(0)
+    #
+    #     # transform image into a pygame image
+    #     image = Image.open(buffer)
+    #     mode = image.mode
+    #     size = image.size
+    #     data = image.tobytes()
+    #     plot_surface = pygame.image.fromstring(data, size, mode)
+    #
+    #     # Center and blit on the screen
+    #     rect = plot_surface.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
+    #
+    #     # Keep plot visible for a duration
+    #     start_time = pygame.time.get_ticks()
+    #
+    #     running = True
+    #     while running:
+    #
+    #         pygame.display.flip()
+    #
+    #         # still allow the player to quit the screen
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 pygame.quit()
+    #                 raise SystemExit
+    #
+    #         # Draw depending on elapsed time
+    #         if pygame.time.get_ticks() - start_time > track_duration:
+    #
+    #             # show track from 'track_duration' ms
+    #             surface.blit(plot_surface, rect)
+    #
+    #             # then close window after bg_duration
+    #             if pygame.time.get_ticks() - start_time > bg_duration:
+    #                 pygame.quit()
+    #                 raise SystemExit
+    #
+    #         pygame.time.Clock().tick(30)
 
 
 

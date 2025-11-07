@@ -1,6 +1,7 @@
 import pygame
 import pytmx
 import pyscroll
+import asyncio
 
 from Jellyfish import Jellyfish
 from Player import Player
@@ -22,7 +23,7 @@ class Game:
         pygame.display.set_caption('Road to 28')
 
         # import map
-        tmx_data = pytmx.util_pygame.load_pygame("maps/cake_map.tmx", pixelalpha=True)
+        tmx_data = pytmx.util_pygame.load_pygame("assets/maps/cake_map.tmx", pixelalpha=True)
         map_data = pyscroll.TiledMapData(tmx_data)
         self.map_layer = pyscroll.BufferedRenderer(map_data, self.screen.get_size())
         self.map_layer.zoom = 2 # zoom x 2
@@ -73,9 +74,9 @@ class Game:
 
         self.total_hoops = len(self.all_hoops) # nb of hoops
 
-    def intro(self):
+    async def intro(self):
 
-        image = pygame.image.load("maps/intro.png")
+        image = pygame.image.load("assets/maps/Intro.png")
         clock = pygame.time.Clock()
         running = True
 
@@ -104,6 +105,8 @@ class Game:
                     if button.collidepoint(event.pos):
                         self.is_playing = True # start the game
                         running = False # stop the display loop
+
+            await asyncio.sleep(0)
 
 
     def handle_input(self):
@@ -168,7 +171,7 @@ class Game:
             pygame.time.Clock().tick(60)
 
         # once zoomed out, we plot the track
-        self.player.plot_track(map_width, map_height, self.screen)
+        # self.player.plot_track(map_width, map_height, self.screen)
 
     def check_progress(self, map_width, map_height):
         # this is the function that puts an end to the game when all hoops have been crossed
@@ -207,7 +210,7 @@ class Game:
                 self.all_hoops.remove(collided_hoop) # remove hoop from pyscroll all_hoops
                 self.group.remove(collided_hoop)  # remove hoop from pyscroll group
 
-    def run(self):
+    async def run(self):
 
         clock = pygame.time.Clock()
 
@@ -245,6 +248,9 @@ class Game:
                 self.is_playing = False
                 pygame.quit()
                 raise SystemExit
+
+            await asyncio.sleep(0)
+
 
 
 

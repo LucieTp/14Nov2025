@@ -3,7 +3,7 @@ import pygame
 class AnimateSprite(pygame.sprite.Sprite):
     def __init__(self, name, width, height, nb_animations):
         super().__init__()
-        self.sprite_sheet = pygame.image.load(f"objects/{name}.png").convert_alpha()
+        self.sprite_sheet = pygame.image.load(f"assets/objects/{name}.png").convert_alpha()
 
         # Load all animation frames
         if name == "Hoops":
