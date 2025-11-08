@@ -144,13 +144,14 @@ class Game:
         filled_width = int(bar_size[0] * progress)
         pygame.draw.rect(self.screen, bar_color, (bar_position[0], bar_position[1], filled_width, bar_size[1]))
 
-    def zoom_out(self, map_width, map_height, target_zoom=0.45, duration=1500):
+    async def zoom_out(self, map_width, map_height, target_zoom=0.45, duration=1500):
         """Smoothly zoom out over time (in ms)"""
 
         start_zoom = self.map_layer.zoom
         start_time = pygame.time.get_ticks()
 
         while True:
+            print("zoom out")
             elapsed = pygame.time.get_ticks() - start_time
             t = min(elapsed / duration, 1.0)  # 0 → 1 over 'duration'
             current_zoom = start_zoom + (target_zoom - start_zoom) * t
@@ -164,6 +165,7 @@ class Game:
             # Redraw
             self.group.draw(self.screen)
             pygame.display.flip()
+            await asyncio.sleep(0)
 
             if t >= 1.0:
                 break
@@ -173,12 +175,12 @@ class Game:
         # once zoomed out, we plot the track
         # self.player.plot_track(map_width, map_height, self.screen)
 
-    def check_progress(self, map_width, map_height):
+    async def check_progress(self, map_width, map_height):
         # this is the function that puts an end to the game when all hoops have been crossed
-        if len(self.all_hoops) == 0:
+        if len(self.all_hoops) == 80:
 
             self.timer.pause()
-            self.zoom_out(map_width, map_height)
+            await self.zoom_out(map_width, map_height)
             self.timer.deactivate()
 
 
@@ -231,7 +233,7 @@ class Game:
             self.group.draw(self.screen)
             self.timer.display_timer(self.screen)
             self.draw_progress_bar()
-            self.check_progress(self.map_width, self.map_height)
+            await self.check_progress(self.map_width, self.map_height)
 
             pygame.display.flip()
 
