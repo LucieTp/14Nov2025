@@ -151,7 +151,6 @@ class Game:
         start_time = pygame.time.get_ticks()
 
         while True:
-            print("zoom out")
             elapsed = pygame.time.get_ticks() - start_time
             t = min(elapsed / duration, 1.0)  # 0 → 1 over 'duration'
             current_zoom = start_zoom + (target_zoom - start_zoom) * t
@@ -173,7 +172,7 @@ class Game:
             pygame.time.Clock().tick(60)
 
         # once zoomed out, we plot the track
-        # self.player.plot_track(map_width, map_height, self.screen)
+        await self.player.plot_track(map_width, map_height, self.screen)
 
     async def check_progress(self, map_width, map_height):
         # this is the function that puts an end to the game when all hoops have been crossed
@@ -252,11 +251,6 @@ class Game:
                 raise SystemExit
 
             await asyncio.sleep(0)
-
-
-
-
-
 
             clock.tick(60) # 60 images/sec
 

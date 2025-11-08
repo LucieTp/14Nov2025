@@ -1,11 +1,14 @@
 import pygame
-# import pandas as pd
-# from matplotlib import pyplot as plt
-# import seaborn as sns
-# from PIL import Image
 # import io
+# from matplotlib import pyplot as plt
+import asyncio
 
 from animation import AnimateSprite
+
+# old
+# from PIL import Image
+# import pandas as pd
+# import seaborn as sns
 
 
 class Player(AnimateSprite):
@@ -22,6 +25,8 @@ class Player(AnimateSprite):
         self.image.set_colorkey((0,0,0)) # remove background
         self.rect = self.image.get_rect() # create image rectangle
         self.position = [x, y] # player position
+
+        print(self.position)
 
         self.feet = pygame.Rect(0,0, self.rect.width * 0.5, 12) # feet location for collisions
         self.old_position = self.position.copy() # keep in record the old position to replace the player in case of collision
@@ -63,62 +68,56 @@ class Player(AnimateSprite):
             self.track["x"].append(self.position[0])
             self.track["y"].append(self.position[1])
 
-    def plot_track(self, map_width, map_height, surface, bg_duration = 10000, track_duration=4000):
 
-        data = pd.DataFrame.from_dict(self.track)
+    async def plot_track(self, map_width, map_height, surface, bg_duration=10000, track_duration=3000):
+        """Draw player's track directly with Pygame (no matplotlib, no PIL, works in pygbag)."""
 
-        # add background rectangle
+        # Create a transparent surface to draw the track
+        plot_surface = pygame.Surface((map_width, map_height), pygame.SRCALPHA)
+        plot_surface.fill((0,0,0,0))  # fully transparent background
 
-        # plot
-        plt.figure(figsize=(10, 10))
-        sns.lineplot(x="x", y="y", alpha = 0.1, sort=False, linewidth = 5, color = "orange", estimator=None, errorbar=None, data=data.sort_values(by = "time", ascending=False))
-        plt.xlim(0, map_width)
-        plt.ylim(0, map_height)
-        plt.gca().invert_yaxis()  # flip to match Pygame coordinates (where 0,0 is at the top left and not bottom left like seaborn)
-        plt.axis("off")
+        # Extract track data
+        x_points = self.track["x"]
+        y_points = self.track["y"]
+        points = list(zip(x_points, y_points))
 
-        # Save plot to an in-memory buffer
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format="PNG", bbox_inches="tight", pad_inches=0, transparent=True)
-        plt.close()  # close figure to free memory
-        buffer.seek(0)
+        print(points)
 
-        # transform image into a pygame image
-        image = Image.open(buffer)
-        mode = image.mode
-        size = image.size
-        data = image.tobytes()
-        plot_surface = pygame.image.fromstring(data, size, mode)
+        points = [(x/2 + 35, y/2 - 100) for (x, y) in points] # flip so that it matches coordinates on screen (bottom left origin)
 
-        # Center and blit on the screen
-        rect = plot_surface.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
+        print(points)
+        # Draw connected lines with low opacity (alpha=40 out of 255)
+        if len(points) > 1:
+            pygame.draw.lines(plot_surface, (255, 165, 0, 100), False, points, 5)  # orange line
 
-        # Keep plot visible for a duration
+
+        # Center and blit to main screen
+        rect = plot_surface.get_rect(topleft=(0,0))
+
+        # Timing loop
         start_time = pygame.time.get_ticks()
-
+        clock = pygame.time.Clock()
         running = True
+
         while running:
-
-            pygame.display.flip()
-
-            # still allow the player to quit the screen
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     raise SystemExit
 
-            # Draw depending on elapsed time
-            if pygame.time.get_ticks() - start_time > track_duration:
+            elapsed = pygame.time.get_ticks() - start_time
 
-                # show track from 'track_duration' ms
+            # Show track after track_duration ms
+            if elapsed > track_duration:
                 surface.blit(plot_surface, rect)
 
-                # then close window after bg_duration
-                if pygame.time.get_ticks() - start_time > bg_duration:
+                if elapsed > bg_duration:
                     pygame.quit()
                     raise SystemExit
 
-            pygame.time.Clock().tick(30)
+            pygame.display.flip()
+            await asyncio.sleep(0)
+            clock.tick(30)
 
 
 
