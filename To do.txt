@@ -61,9 +61,10 @@ To do:
 - and animate player movement X
 - Seperate game_over from deactivate and add deactivate to success plot track X
 - Add music
+- Could ajust the time - would be doable in < 70 seconds
 
 Optional :
-- Animate the sprite
+- Animate the sprite X
 - Animate hoops X
 
 # things to install
