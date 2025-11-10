@@ -1,5 +1,3 @@
-import pygame
-
 from animation import AnimateSprite
 
 
@@ -10,8 +8,7 @@ class Hoop(AnimateSprite):
     def __init__(self, name, x, y, id, width, height, nb_animations):
         super().__init__("Hoops", 37.5, 70, 9)
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.center = (x, y)
         self.number = id
         self.width = width
         self.height = height

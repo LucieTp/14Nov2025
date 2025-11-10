@@ -1,14 +1,7 @@
 import pygame
-# import io
-# from matplotlib import pyplot as plt
 import asyncio
 
 from animation import AnimateSprite
-
-# old
-# from PIL import Image
-# import pandas as pd
-# import seaborn as sns
 
 
 class Player(AnimateSprite):
@@ -25,8 +18,6 @@ class Player(AnimateSprite):
         self.image.set_colorkey((0,0,0)) # remove background
         self.rect = self.image.get_rect() # create image rectangle
         self.position = [x, y] # player position
-
-        print(self.position)
 
         self.feet = pygame.Rect(0,0, self.rect.width * 0.5, 12) # feet location for collisions
         self.old_position = self.position.copy() # keep in record the old position to replace the player in case of collision
@@ -61,7 +52,7 @@ class Player(AnimateSprite):
 
         # only save every half a second
         current_time = pygame.time.get_ticks()  # in milliseconds
-        if current_time - self.last_save_time >= 250:  # 250 ms = 0.25 sec
+        if current_time - self.last_save_time >= 200:  # 200 ms = 0.2 sec
             self.last_save_time = current_time
 
             self.track["time"].append(current_time / 1000)
@@ -81,11 +72,8 @@ class Player(AnimateSprite):
         y_points = self.track["y"]
         points = list(zip(x_points, y_points))
 
-        print(points)
+        points = [(x/2.1 + 30, y/2 - 100) for (x, y) in points]
 
-        points = [(x/2 + 35, y/2 - 100) for (x, y) in points] # flip so that it matches coordinates on screen (bottom left origin)
-
-        print(points)
         # Draw connected lines with low opacity (alpha=40 out of 255)
         if len(points) > 1:
             pygame.draw.lines(plot_surface, (255, 165, 0, 100), False, points, 5)  # orange line

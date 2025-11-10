@@ -16,7 +16,7 @@ class Game:
         # tells us if the player has pressed play yet or not
         self.is_playing = False
 
-        self.timer = Timer(80000) # 80 secs
+        self.timer = Timer(73000) # 80 secs
 
         # create game window
         self.screen = pygame.display.set_mode((800, 600))
@@ -176,7 +176,7 @@ class Game:
 
     async def check_progress(self, map_width, map_height):
         # this is the function that puts an end to the game when all hoops have been crossed
-        if len(self.all_hoops) == 80:
+        if len(self.all_hoops) == 0:
 
             self.timer.pause()
             await self.zoom_out(map_width, map_height)

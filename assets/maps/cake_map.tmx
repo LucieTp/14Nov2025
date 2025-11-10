@@ -528,7 +528,7 @@
   <object id="2" name="Hoop" x="263.333" y="597.333">
    <point/>
   </object>
-  <object id="4" name="Hoop" x="325.333" y="719">
+  <object id="4" name="Hoop" x="300.333" y="714.5">
    <point/>
   </object>
   <object id="5" name="Hoop" x="271.333" y="403.333">
@@ -540,10 +540,10 @@
   <object id="7" name="Hoop" x="128.334" y="290.666">
    <point/>
   </object>
-  <object id="8" name="Hoop" x="163.5" y="414">
+  <object id="8" name="Hoop" x="158" y="417">
    <point/>
   </object>
-  <object id="9" name="Hoop" x="207.167" y="472">
+  <object id="9" name="Hoop" x="203.167" y="476">
    <point/>
   </object>
   <object id="10" name="Hoop" x="248.667" y="536">
@@ -582,13 +582,13 @@
   <object id="21" name="Hoop" x="685.333" y="468">
    <point/>
   </object>
-  <object id="22" name="Hoop" x="726" y="584.334">
+  <object id="22" name="Hoop" x="752" y="598.334">
    <point/>
   </object>
   <object id="23" name="Hoop" x="689.273" y="469.334">
    <point/>
   </object>
-  <object id="24" name="Hoop" x="642.666" y="336.667">
+  <object id="24" name="Hoop" x="648.666" y="330.167">
    <point/>
   </object>
   <object id="25" name="Hoop" x="738" y="324">
@@ -600,13 +600,13 @@
   <object id="27" name="Hoop" x="850.667" y="388.667">
    <point/>
   </object>
-  <object id="28" name="Hoop" x="892.333" y="512.333">
+  <object id="28" name="Hoop" x="909.833" y="513.333">
    <point/>
   </object>
-  <object id="29" name="Hoop" x="822" y="274.667">
+  <object id="29" name="Hoop" x="825" y="256.167">
    <point/>
   </object>
-  <object id="30" name="Hoop" x="908" y="257">
+  <object id="30" name="Hoop" x="923.5" y="240">
    <point/>
   </object>
   <object id="31" name="Hoop" x="925.333" y="362.666">
@@ -783,7 +783,7 @@
   <object id="96" name="Hoop" x="302" y="960">
    <point/>
   </object>
-  <object id="97" name="Hoop" x="179" y="986">
+  <object id="97" name="Hoop" x="183" y="991">
    <point/>
   </object>
   <object id="98" name="Hoop" x="262" y="1123">
@@ -798,19 +798,19 @@
   <object id="108" name="Tree" x="254.708" y="1005.75" width="5" height="12.25"/>
   <object id="109" name="Tree" x="398.148" y="1163.6" width="5.94318" height="14.6591"/>
   <object id="110" name="Tree" x="718.705" y="986.489" width="5.5" height="15.625"/>
-  <object id="111" name="Jellyfish" x="147.5" y="354.333">
+  <object id="111" name="Jellyfish" x="162" y="345.833">
    <point/>
   </object>
-  <object id="112" name="Jellyfish" x="233.833" y="471.25">
+  <object id="112" name="Jellyfish" x="243.333" y="456.25">
    <point/>
   </object>
-  <object id="113" name="Jellyfish" x="515.5" y="477.5">
+  <object id="113" name="Jellyfish" x="528.5" y="473">
    <point/>
   </object>
   <object id="114" name="Jellyfish" x="689.5" y="366">
    <point/>
   </object>
-  <object id="115" name="Jellyfish" x="857" y="284.5">
+  <object id="115" name="Jellyfish" x="875" y="287">
    <point/>
   </object>
   <object id="116" name="Jellyfish" x="817.5" y="468.5">

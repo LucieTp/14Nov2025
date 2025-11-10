@@ -9,16 +9,19 @@ class AnimateSprite(pygame.sprite.Sprite):
         if name == "Hoops":
             self.y_offset = 160
             self.x_offset = 40
+            self.animation_speed = 0.11  # lower = slower animation
             self.images = {"static":self.get_images(self.x_offset, self.y_offset, width, height, nb_animations, 1)}
 
         elif name == "Jellyfish":
             self.y_offset = 100
             self.x_offset = 5
+            self.animation_speed = 0.1  # lower = slower animation
             self.images = {"static":self.get_images(self.x_offset, self.y_offset, width, height, nb_animations, 0.5)}
 
         elif name == "Hamtaro1":
             self.y_offset = 0
             self.x_offset = 0
+            self.animation_speed = 0.2  # lower = slower animation
             self.images = {  # different image for different orientations
                 "down": self.get_images(width + self.x_offset, height + self.y_offset, width, height, 4, 1),
                 "left": self.get_images(width + self.x_offset, height * 3 + self.y_offset, width, height, 4, 1),
@@ -32,7 +35,6 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.image = self.images[list(self.images.keys())[0]][self.animation_index]
         # self.image.set_colorkey((128, 0, 128)) # remove purple background - get background with print(self.sprite_sheet.get_at((0, 0)))
         self.rect = self.image.get_rect()
-        self.animation_speed = 0.1  # lower = slower animation
         self.clock = 0.0
 
 
