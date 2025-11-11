@@ -31,6 +31,7 @@ class Game:
         self.map_width = tmx_data.width * tmx_data.tilewidth
         self.map_height = tmx_data.height * tmx_data.tileheight
 
+
         # make player group
         player_position = tmx_data.get_object_by_name("player")
         self.player = Player(player_position.x, player_position.y)
@@ -111,6 +112,7 @@ class Game:
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
+        player_rect = self.player.rect  # assuming your player has a rect
 
         if pressed[pygame.K_UP]:
             self.player.move_up()
@@ -124,6 +126,40 @@ class Game:
         elif pressed[pygame.K_RIGHT]:
             self.player.move_right()
             self.player.change_orientation("right")
+
+        # --- Touch / Mouse input ---
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+
+            if event.type == pygame.FINGERDOWN:
+
+                x, y = event.pos
+
+                # Compare touch position with player center
+                player_x, player_y = player_rect.center
+
+                dx = x - player_x
+                dy = y - player_y
+
+                # Decide direction based on where the touch happened
+                if abs(dx) > abs(dy):
+                    # Horizontal movement
+                    if dx > 0:
+                        self.player.move_right()
+                        self.player.change_orientation("right")
+                    else:
+                        self.player.move_left()
+                        self.player.change_orientation("left")
+                else:
+                    # Vertical movement
+                    if dy > 0:
+                        self.player.move_down()
+                        self.player.change_orientation("down")
+                    else:
+                        self.player.move_up()
+                        self.player.change_orientation("up")
 
     def draw_progress_bar(self):
 
