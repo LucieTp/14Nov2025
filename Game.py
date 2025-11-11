@@ -127,39 +127,7 @@ class Game:
             self.player.move_right()
             self.player.change_orientation("right")
 
-        # --- Touch / Mouse input ---
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                raise SystemExit
 
-            if event.type == pygame.FINGERDOWN:
-
-                x, y = event.pos
-
-                # Compare touch position with player center
-                player_x, player_y = player_rect.center
-
-                dx = x - player_x
-                dy = y - player_y
-
-                # Decide direction based on where the touch happened
-                if abs(dx) > abs(dy):
-                    # Horizontal movement
-                    if dx > 0:
-                        self.player.move_right()
-                        self.player.change_orientation("right")
-                    else:
-                        self.player.move_left()
-                        self.player.change_orientation("left")
-                else:
-                    # Vertical movement
-                    if dy > 0:
-                        self.player.move_down()
-                        self.player.change_orientation("down")
-                    else:
-                        self.player.move_up()
-                        self.player.change_orientation("up")
 
     def draw_progress_bar(self):
 
